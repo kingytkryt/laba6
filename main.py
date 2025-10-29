@@ -9,6 +9,39 @@ diction = [
     {"Номер групи": "102", "ПІБ": "Зякун Владислав Олександрович", "Курс": "2",
      "Предмети та оцінки": {"Англійська": "69", "Чисельні методи": "79", "Українська мова": "89"}}
 ]
+#Функція виведення (Мізерний Іван)
+def print_diction():
+    print("-" * 100)
+    print(f"{'ПІБ':<30} | {'Номер групи':<5} | {'Курс':<3} | {'Предмети та Оцінки':}")
+    for element in diction:#друк всіх елементів словнику за допомогою циклу
+        pib = element["ПІБ"]
+        group = element["Номер групи"]
+        course = element["Курс"]
+        subjects_and_mark = element["Предмети та оцінки"]
+        # використаний метод .join, щоб вивести елементи вкладеного словника через кому
+        subjects_mark = ", ".join(f"{k}: {v}" for k, v in subjects_and_mark.items())
+        print(f"{pib:<30} | {group:^11} | {course:^4} | {subjects_mark:}")
+    print("-" * 100)
+#Функція оновлення елементу (Мізерний Іван)
+def update_diction():
+    update = input("Введіть ПІБ студента, для якого потрібно оновити дані: ")
+    for element in diction:
+        if element["ПІБ"].lower() == update.lower():#пошук введених даних у списку
+            choice = input("Виберіть параметр для оновлення: 1 - Номер групи, 2 - Курс, 3 - Оцінка за вибраним предметом ")
+            if choice == "1":
+                update_element = input(f"Введіть новий номер групи для студента {element["ПІБ"]}: ")
+                element["Номер групи"] = update_element#оновлення старого значення номеру групи
+                print(f"Новий номер групи для студента {element["ПІБ"]}: {update_element}")
+            if choice == "2":
+                update_element = input(f"Введіть новий курс групи для студента {element["ПІБ"]}: ")
+                element["Курс"] = update_element#оновлення старого значення курсу
+                print(f"Новий курс для студента {element["ПІБ"]}: {update_element}")
+            if choice == "3":
+                subject_name = input("Введіть предмет для якого бажаєте змінити оцінку: ")
+                if subject_name in element["Предмети та оцінки"]:#пошук елементу у вкладеному словнику
+                    update_element = input(f"Введіть нову оцінку за вибраним предметом для студента {element["ПІБ"]} ")
+                    element["Предмети та оцінки"][subject_name] = update_element#оновлення старого значення оцінки для вибраного предмету
+                    print(f"Нова оцінка для студента {element["ПІБ"]} з дисципліни {subject_name}: {update_element}")
 # Функція додавання студента (Лагода Тимофій)
 def addstudent():
     lessons = {}#створення вкладеного словнику для предметів та оцінок
@@ -28,4 +61,7 @@ def addstudent():
         "Предмети та оцінки": lessons
     }
     diction.append(new_student)
+print_diction()
 addstudent()
+update_diction()
+print_diction()
