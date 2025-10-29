@@ -70,14 +70,61 @@ def delete_student():
             print(f"\nСтудента {student['ПІБ']} видалено з бази\n")
             return
     print("Студента з таким ПІБ не знайдено")
-#Меню вибору (Зякун Владислав)
+#Функція пошуку (Лєпіхін Гліб)
+def search():
+    while True:
+        print("\nОберіть критерій пошуку:")
+        print("1 - За ПІБ")
+        print("2 - За номером групи")
+        print("3 - За курсом")
+        choice = input("Ваш вибір: ")
+        if choice == "1":
+            key = "ПІБ"
+            value = input("Введіть ПІБ для пошуку: ")
+        elif choice == "2":
+            key = "Номер групи"
+            value = input("Введіть номер групи для пошуку: ")
+        elif choice == "3":
+            key = "Курс"
+            value = input("Введіть номер курсу для пошуку: ")
+        else:
+            print("Некоректний ввід")
+            return
+        found = False
+        print(f"\nРезультати пошуку за '{key}' = {value}:")
+        print("-" * 100)
+        for student in diction:  # цикл для виводу знайдених студентів за вибраним критерієм (якщо критерій знайдено)
+            if student[key].lower() == value.lower():
+                pib = student["ПІБ"]
+                group = student["Номер групи"]
+                course = student["Курс"]
+                subjects_and_mark = student["Предмети та оцінки"]
+                subjects_mark = ", ".join(f"{k}: {v}" for k, v in subjects_and_mark.items())
+                print(f"ПІБ: {pib} | Номер групи: {group} | Курс: {course} | Предмети та Оцінки: {subjects_mark}")
+                found = True
+        if not found:  # якщо критерій не знайдено
+            print("Студентів не знайдено.")
+        print("-" * 100)
+        while True:  # можливість повторного пошуку
+            again = input("\nБажаєте здійснити ще один пошук? (так/ні): ")
+            if again.lower() == "так":
+                break
+            elif again.lower() == "ні":
+                print("Пошук завершено.")
+                return
+            else:
+                print("Некоректний ввід. Спробуйте ще раз")
+
+    # Меню вибору (Зякун Владислав)
 def main_menu():
     while True:
         print("\nМЕНЮ ")  # меню вибору функцій
         print("1 - Показати всіх студентів")
         print("2 - Додати нового студента")
         print("3 - Видалити студента")
-        print("4 - Вийти")
+        print("4 - Пошук")
+        print("5 - Оновити дані")
+        print("6 - Вийти")
         choice = input("Ваш вибір: ")
         if choice == "1":
             print_diction()
@@ -86,6 +133,10 @@ def main_menu():
         elif choice == "3":
             delete_student()
         elif choice == "4":
+            search()
+        elif choice == "5":
+            update_diction()
+        elif choice == "6":
             print("Програму завершено.")
             break
         else:
