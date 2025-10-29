@@ -61,7 +61,33 @@ def addstudent():
         "Предмети та оцінки": lessons
     }
     diction.append(new_student)
-print_diction()
-addstudent()
-update_diction()
-print_diction()
+#Функція видалення (Зякун Владислав)
+def delete_student():
+    pib_to_delete = input("Введіть ПІБ студента, якого потрібно видалити: ")
+    for student in diction:
+        if student["ПІБ"].lower() == pib_to_delete.lower():#пошук студента, якого потрібно видалити
+            diction.remove(student)
+            print(f"\nСтудента {student['ПІБ']} видалено з бази\n")
+            return
+    print("Студента з таким ПІБ не знайдено")
+#Меню вибору (Зякун Владислав)
+def main_menu():
+    while True:
+        print("\nМЕНЮ ")  # меню вибору функцій
+        print("1 - Показати всіх студентів")
+        print("2 - Додати нового студента")
+        print("3 - Видалити студента")
+        print("4 - Вийти")
+        choice = input("Ваш вибір: ")
+        if choice == "1":
+            print_diction()
+        elif choice == "2":
+            addstudent()
+        elif choice == "3":
+            delete_student()
+        elif choice == "4":
+            print("Програму завершено.")
+            break
+        else:
+            print("Невірний вибір. Спробуйте ще раз.")
+main_menu()
